@@ -1,0 +1,7 @@
+<div class="logo-carousel" #carousel>
+  <div class="logo-track" #track>
+    <div class="logo-item" *ngFor="let logo of logos">
+      <img [src]="logo.url" [alt]="logo.alt" />
+    </div>
+  </div>
+</div>

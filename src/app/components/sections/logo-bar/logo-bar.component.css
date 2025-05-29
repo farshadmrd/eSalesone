@@ -1,0 +1,34 @@
+.logo-carousel {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  background: #fff;
+  position: relative;
+  max-height: 12vh;
+}
+
+.logo-track {
+  display: flex;
+  animation: scroll-left 20s linear infinite;
+}
+
+.logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 60px;
+}
+
+.logo-item img {
+  height: 60px;
+  object-fit: contain;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

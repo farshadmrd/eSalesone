@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'sansita';
+  src: url('/assets/fonts/Sansita-Regular.ttf') format('truetype');
+}
+.container{
+  background-color: var(--background-color);
+}
+.main-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 95vh;
+}
+img {
+    filter: grayscale(100%);
+    width: 50%;
+    height: 80%;
+  }
+
+  
+  .masked-text {
+    font-family: 'sansita';
+    font-size: 330px;
+    background-color: #bfbfbf;
+    color: black;
+    font-weight: bold;
+    padding-bottom: 80px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    mix-blend-mode: screen;
+    line-height: 0.30;   
+    letter-spacing: 0.2em;
+  }
+  
+  .circle-mask {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(255, 100, 100, 0.6); /* Adjust color */
+    border-radius: 50%;
+    bottom: -160px;
+    right: 400px;
+    z-index: 5;
+    mix-blend-mode: multiply; /* Optional for blend effect */
+  }
+  .develop-text{
+    font-family: 'sansita';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 90px;
+    margin-top: -210px;
+    font-weight: bold;
+    color: #FFF;
+  }

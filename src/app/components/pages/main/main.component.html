@@ -1,0 +1,27 @@
+<div class="container">
+
+  <app-header [scrollTo]="scrollTo"></app-header>
+
+  <div class="main-container">
+    <div class="develop-text">
+      <span>t</span>
+      <span>t</span>
+      <span>t</span>
+      <span>t</span>
+      <span>t</span>
+      <span>t</span>
+      <span>t</span>
+    </div>
+
+    <img src="assets/img/landing.png" alt="landing" />
+
+    <div [ngStyle]="{ 'margin-left': '-230px', 'margin-top': '250px' }">
+      <h3 [style.color]="'#e3e3e3'">Farshad Moradi</h3>
+      <h3 [style.color]="'#464646'">Software engineer</h3>
+    </div>
+
+    <div (click)="scrollTo('page2')" class="masked-text">FRAMEUP</div>
+    <div class="circle-mask"></div>
+  </div>
+  
+</div>

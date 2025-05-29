@@ -1,0 +1,38 @@
+/* CSS */
+nav {
+    height: 5vh;
+    background-color: #222;
+    direction: rtl;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  nav ul li {
+    margin: 0 16px;
+  }
+  
+  nav ul li a,
+  nav ul li button {
+    display: inline-block;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: rgb(216, 216, 216);
+    background: none;
+    border: none;
+    text-decoration: none;
+  }
+  
+  nav ul li button:hover,
+  nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  

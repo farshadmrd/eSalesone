@@ -1,0 +1,84 @@
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 9999; /* increase z-index just in case nav is higher */
+  transform: translate(-50%, -50%);
+}
+
+body {
+  cursor: none;
+}
+
+#center-dot {
+  transition: filter 0.3s ease, fill 0.3s ease, transform 0.2s ease;
+}
+
+/* When cursor is moving */
+#center-dot.moving {
+  filter: drop-shadow(0 0 5px #00ffaa) drop-shadow(0 0 10px #00ffaa);
+}
+
+/* When hovering interactive elements (button, li, a) */
+#custom-cursor.hovering-button #center-dot {
+  fill: black;
+  filter: drop-shadow(0 0 6px #00ffcc) drop-shadow(0 0 12px #00ffcc);
+  transform: scale(1.5);
+}
+
+
+#outer-ring {
+  stroke: rgba(0, 255, 170, 0.3);
+  stroke-width: 4;
+  transition: stroke 0.4s ease, filter 0.3s ease;
+  animation: breathing 3s ease-in-out infinite;
+}
+
+#custom-cursor.moving-ring #outer-ring {
+  stroke: rgba(0, 255, 170, 0.8);
+  filter: drop-shadow(0 0 4px #00ffaa) drop-shadow(0 0 8px #00ffaa);
+  animation: pulse 0.6s ease-out;
+}
+
+/* Optional: tap animation */
+#custom-cursor.tapped #outer-ring {
+  animation: tapFlash 0.4s ease-out;
+}
+
+@keyframes breathing {
+  0%, 100% {
+    stroke-width: 3.5;
+    opacity: 0.6;
+  }
+  50% {
+    stroke-width: 4.5;
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    stroke-width: 3.5;
+  }
+  50% {
+    stroke-width: 5;
+  }
+  100% {
+    stroke-width: 3.5;
+  }
+}
+
+@keyframes tapFlash {
+  0% {
+    stroke: #00ffaa;
+    filter: drop-shadow(0 0 10px #00ffaa);
+  }
+  100% {
+    stroke: rgba(0, 255, 170, 0.3);
+    filter: none;
+  }
+}
+

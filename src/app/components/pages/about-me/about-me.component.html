@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="about-me">
+    <p class="about-me-text">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor sint tempore, odio quos porro aut velit. Sint officia itaque dignissimos maxime nostrum quaerat non tenetur porro nobis, harum, eaque perferendis!
+    </p>
+    <div (click)="TriggerAnimationService.triggerAnimation()" class="wrapper">
+      <img
+        src="assets/img/landing.png"
+        alt="Background"
+        class="background-img"
+        [class.animate-bg]="TriggerAnimationService.animate"
+      />
+      <img
+        src="assets/img/landing.png"
+        alt="Foreground"
+        class="foreground-img"
+      />
+    </div>
+  </div>
+  <app-logo-bar></app-logo-bar>
+</div>
