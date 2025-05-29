@@ -1,0 +1,12 @@
+<section class="services-section">
+  <div class="section-header">
+    <ng-content></ng-content>
+    <!-- <p class="section-description">Choose the perfect service package that fits your needs</p> -->
+  </div>
+  
+  <div class="service-cards-grid">
+    <div class="service-card-wrapper" *ngFor="let service of services">
+      <app-service-card [service]="service"></app-service-card>
+    </div>
+  </div>
+</section>

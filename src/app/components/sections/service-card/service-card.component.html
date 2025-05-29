@@ -1,0 +1,20 @@
+<div class="service-card">
+  <div class="service-icon">
+    <img [src]="service.icon" alt="{{ service.title }} icon">
+  </div>
+  <h3 class="service-title">{{ service.title }}</h3>
+  <p class="service-description">{{ service.description }}</p>
+  
+  <div class="pricing-options" *ngIf="service.pricing && service.pricing.length > 0">
+    <div *ngFor="let pricing of service.pricing" class="pricing-tier" [class.recommended]="pricing.recommended">
+      <div class="pricing-header">
+        <h4>{{ pricing.name }}</h4>
+        <span class="price">${{ pricing.price }}</span>
+      </div>
+      <ul class="features">
+        <li *ngFor="let feature of pricing.features">{{ feature }}</li>
+      </ul>
+      <button class="purchase-btn">Select Package</button>
+    </div>
+  </div>
+</div>
