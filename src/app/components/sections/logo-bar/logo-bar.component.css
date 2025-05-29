@@ -4,7 +4,7 @@
   width: 100%;
   background: #000000;
   position: relative;
-  max-height: 30vh;
+  min-height: 18vh;
 }
 
 .logo-track {
