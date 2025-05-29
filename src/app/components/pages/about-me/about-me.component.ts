@@ -1,6 +1,7 @@
 import { Component,inject  } from '@angular/core';
 import { LogoBarComponent } from "../../sections/logo-bar/logo-bar.component";
 import { TriggerAnimationService } from "../../../services/trigger-animation.service";
+import { ScrollToService } from "../../../services/scroll-to.services";
 
 @Component({
   selector: 'app-about-me',
@@ -10,5 +11,9 @@ import { TriggerAnimationService } from "../../../services/trigger-animation.ser
 })
 export class AboutMeComponent {
 TriggerAnimationService=inject(TriggerAnimationService); //trigger animation of about me
+scrollToService = inject(ScrollToService); // scroll to service
 
+  handleServicesClick(sectionId: string){
+    this.scrollToService.scrollTo(sectionId);
+  }
 }
