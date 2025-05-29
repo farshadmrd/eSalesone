@@ -7,10 +7,29 @@
   align-items: center;
   height: 89vh;
 }
+.about-me-title{
+  margin-top: 8px;
+  font-size: 50px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
 .about-me-text{
-  width: 400px;
-  text-align: justify;
+  margin-top: 8px;
+  width: 500px;
   text-justify: inter-word;
+  font-size: 20px;
+}
+.use-my-service{
+  margin-top: 24px;
+  background-color: rgb(15, 15, 15);
+  color: rgb(244, 244, 244);
+  width: 200px;
+  height: 50px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 16px;
+
 }
 
 .wrapper {
