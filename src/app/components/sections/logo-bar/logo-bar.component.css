@@ -2,9 +2,9 @@
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
-  background: #1b1b1b;
+  background: #000000;
   position: relative;
-  max-height: 12vh;
+  max-height: 30vh;
 }
 
 .logo-track {
@@ -16,13 +16,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 60px;
+  padding: 0px 60px 0px 60px;
   /* filter: grayscale(100%); */
 
 }
 
 .logo-item img {
-  height: 60px;
+  filter: brightness(50%);
+
+  width: 320px;
+  height: 220px;
   object-fit: contain;
 }
 
