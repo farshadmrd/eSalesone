@@ -14,7 +14,7 @@
       <ul class="features">
         <li *ngFor="let feature of pricing.features">{{ feature }}</li>
       </ul>
-      <button class="purchase-btn">Select Package</button>
+      <button class="purchase-btn" (click)="onSelectPackage(pricing)">Select Package</button>
     </div>
   </div>
 </div>

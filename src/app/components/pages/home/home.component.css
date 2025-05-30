@@ -1,0 +1,15 @@
+/* Homepage container styles */
+#page2 {
+  height: 600px;
+}
+
+/* Smooth scroll behavior for the entire page */
+:host {
+  display: block;
+  scroll-behavior: smooth;
+}
+
+/* Ensure each section takes full viewport height */
+#main, #page2, #page3 {
+  min-height: 100vh;
+}

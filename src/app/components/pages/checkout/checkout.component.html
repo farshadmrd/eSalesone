@@ -1,0 +1,210 @@
+<div class="container">
+  <app-header></app-header>
+  
+  <div class="checkout-container">
+    <div class="checkout-header">
+      <h1>Checkout</h1>
+      <p>Complete your purchase</p>
+    </div>
+
+    <div class="checkout-content">
+      <!-- Left side - Form -->
+      <div class="checkout-form">
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h2>Personal Information</h2>
+            
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input 
+                type="text" 
+                id="fullName" 
+                formControlName="fullName"
+                [class.error]="isFieldInvalid('fullName')"
+                placeholder="Enter your full name">
+              <span class="error-message" *ngIf="isFieldInvalid('fullName')">
+                {{ getFieldError('fullName') }}
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                [class.error]="isFieldInvalid('email')"
+                placeholder="Enter your email address">
+              <span class="error-message" *ngIf="isFieldInvalid('email')">
+                {{ getFieldError('email') }}
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                formControlName="phone"
+                [class.error]="isFieldInvalid('phone')"
+                placeholder="Enter your phone number">
+              <span class="error-message" *ngIf="isFieldInvalid('phone')">
+                {{ getFieldError('phone') }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Billing Address -->
+          <div class="form-section">
+            <h2>Billing Address</h2>
+            
+            <div class="form-group">
+              <label for="address">Address *</label>
+              <input 
+                type="text" 
+                id="address" 
+                formControlName="address"
+                [class.error]="isFieldInvalid('address')"
+                placeholder="Enter your street address">
+              <span class="error-message" *ngIf="isFieldInvalid('address')">
+                {{ getFieldError('address') }}
+              </span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input 
+                  type="text" 
+                  id="city" 
+                  formControlName="city"
+                  [class.error]="isFieldInvalid('city')"
+                  placeholder="City">
+                <span class="error-message" *ngIf="isFieldInvalid('city')">
+                  {{ getFieldError('city') }}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="state">State *</label>
+                <input 
+                  type="text" 
+                  id="state" 
+                  formControlName="state"
+                  [class.error]="isFieldInvalid('state')"
+                  placeholder="State">
+                <span class="error-message" *ngIf="isFieldInvalid('state')">
+                  {{ getFieldError('state') }}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="zipCode">Zip Code *</label>
+                <input 
+                  type="text" 
+                  id="zipCode" 
+                  formControlName="zipCode"
+                  [class.error]="isFieldInvalid('zipCode')"
+                  placeholder="12345">
+                <span class="error-message" *ngIf="isFieldInvalid('zipCode')">
+                  {{ getFieldError('zipCode') }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Information -->
+          <div class="form-section">
+            <h2>Payment Information</h2>
+            
+            <div class="form-group">
+              <label for="cardNumber">Card Number *</label>
+              <input 
+                type="text" 
+                id="cardNumber" 
+                maxlength="19"
+                [class.error]="isFieldInvalid('cardNumber')"
+                (input)="formatCardNumber($event)"
+                placeholder="1234 5678 9012 3456">
+              <span class="error-message" *ngIf="isFieldInvalid('cardNumber')">
+                {{ getFieldError('cardNumber') }}
+              </span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiryDate">Expiry Date *</label>
+                <input 
+                  type="text" 
+                  id="expiryDate" 
+                  maxlength="5"
+                  [class.error]="isFieldInvalid('expiryDate')"
+                  (input)="formatExpiryDate($event)"
+                  placeholder="MM/YY">
+                <span class="error-message" *ngIf="isFieldInvalid('expiryDate')">
+                  {{ getFieldError('expiryDate') }}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="cvv">CVV *</label>
+                <input 
+                  type="text" 
+                  id="cvv" 
+                  maxlength="3"
+                  formControlName="cvv"
+                  [class.error]="isFieldInvalid('cvv')"
+                  placeholder="123">
+                <span class="error-message" *ngIf="isFieldInvalid('cvv')">
+                  {{ getFieldError('cvv') }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" [disabled]="!checkoutForm.valid">
+            Complete Purchase
+          </button>
+        </form>
+      </div>
+
+      <!-- Right side - Order Summary -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+          <div class="summary-items">
+          <div class="summary-item" *ngFor="let item of orderSummary">
+            <div class="item-info">
+              <h3>{{ item.title }}</h3>
+              <p class="package-name">{{ item.package }}</p>
+              <ul class="features-list">
+                <li *ngFor="let feature of item.features">{{ feature }}</li>
+              </ul>
+            </div>
+            <div class="item-actions">
+              <div class="item-price">${{ item.price }}</div>
+              <button class="remove-btn" (click)="removeItem(item.id)" *ngIf="item.id !== 'sample-1' && item.id !== 'sample-2'">×</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-total">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span>${{ getTotal() }}</span>
+          </div>
+          <div class="total-row">
+            <span>Tax:</span>
+            <span>${{ (getTotal() * 0.08).toFixed(2) }}</span>
+          </div>
+          <div class="total-row final-total">
+            <span>Total:</span>
+            <span>${{ (getTotal() * 1.08).toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
