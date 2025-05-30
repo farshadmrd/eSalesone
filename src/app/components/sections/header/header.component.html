@@ -1,8 +1,8 @@
 <nav>
   <ul>
-    <li><a href="#" (click)="handleClick()" >About Me</a></li>
-    <li><a href="#" (click)="handleServicesClick('page3')">My Services</a></li>
-    <li><a href="#" (click)="handleServicesClick('checkout')">Checkout</a></li>
+    <li><a href="#" (click)="handleClick(); $event.preventDefault()" >About Me</a></li>
+    <li><a href="#" (click)="handleServicesClick('page3'); $event.preventDefault()">My Services</a></li>
+    <li><a href="#" (click)="handleServicesClick('checkout'); $event.preventDefault()">Checkout</a></li>
     <li><a href="#">Works</a></li>
     <li><a href="#">Contact Me</a></li>
   </ul>
