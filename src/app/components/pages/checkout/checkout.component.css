@@ -6,7 +6,7 @@
 .container {
   background-color: var(--background-color);
   min-height: 100vh;
-  padding: 20px;
+  height: 100%;
 }
 
 .checkout-container {
@@ -302,6 +302,14 @@ input.error {
 }
 
 /* Responsive Design */
+
+@media screen and (max-width: 1920px) {
+
+  .container{
+      min-height: 150vh;
+  }
+}
+
 @media (max-width: 768px) {
   .checkout-content {
     grid-template-columns: 1fr;
