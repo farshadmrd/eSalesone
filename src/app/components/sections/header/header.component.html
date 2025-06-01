@@ -1,9 +1,17 @@
 <nav>
-  <ul>
-    <li><a href="#" (click)="handleClick(); $event.preventDefault()" >About Me</a></li>
-    <li><a href="#" (click)="handleServicesClick('page3'); $event.preventDefault()">My Services</a></li>
-    <li><a href="#" (click)="handleServicesClick('checkout'); $event.preventDefault()">Checkout</a></li>
-    <li><a href="#">Works</a></li>
-    <li><a href="#">Contact Me</a></li>
+  <!-- Burger menu button for mobile -->
+  <button class="burger-menu" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Navigation menu -->
+  <ul [class.mobile-menu-open]="isMobileMenuOpen">
+    <li><a href="#" (click)="handleClick(); closeMobileMenu(); $event.preventDefault()" >About Me</a></li>
+    <li><a href="#" (click)="handleServicesClick('page3'); closeMobileMenu(); $event.preventDefault()">My Services</a></li>
+    <li><a href="#" (click)="handleServicesClick('checkout'); closeMobileMenu(); $event.preventDefault()">Checkout</a></li>
+    <li><a href="#" (click)="closeMobileMenu()">Works</a></li>
+    <li><a href="#" (click)="closeMobileMenu()">Contact Me</a></li>
   </ul>
 </nav>

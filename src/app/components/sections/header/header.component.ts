@@ -1,4 +1,4 @@
-import { Component,input,inject } from '@angular/core';
+import { Component,input,inject, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TriggerAnimationService } from "../../../services/trigger-animation.service";
 import { ScrollToService } from "../../../services/scroll-to.services";
@@ -14,6 +14,28 @@ export class HeaderComponent {
   scrollToService = inject(ScrollToService); // scroll to service
   router = inject(Router);
   route = inject(ActivatedRoute);
+  
+  // Mobile menu state
+  isMobileMenuOpen = false;
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+  }
+
+  // Close mobile menu when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const nav = target.closest('nav');
+    
+    // If click is outside nav and mobile menu is open, close it
+    if (!nav && this.isMobileMenuOpen) {
+      this.isMobileMenuOpen = false;
+    }
+  }
   
   handleClick(){
     // Check if we're on home page for scrolling, otherwise navigate

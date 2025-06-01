@@ -16,16 +16,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px 60px 0px 60px;
+  padding: 0px 3.75rem 0px 3.75rem;
   /* filter: grayscale(100%); */
 
 }
 
 .logo-item img {
   filter: brightness(50%);
-
-  width: 320px;
-  height: 220px;
+  width: 20rem;
+  height: 13.75rem;
   object-fit: contain;
 }
 
@@ -33,7 +32,21 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@media screen and (min-width: 2560px) {
+
+  .logo-item img {
+    height: 15rem;
+  }
+}
+@media screen and (max-width: 1920px) {
+
+  .logo-item img {
+    height: 10.75rem;
   }
 }

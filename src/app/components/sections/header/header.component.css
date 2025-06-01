@@ -3,6 +3,7 @@ nav {
     height: 5vh;
     background-color: #222;
     direction: rtl;
+    position: relative;
   }
   
   nav ul {
@@ -34,5 +35,135 @@ nav {
   nav ul li a:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
+  }
+
+  /* Burger menu button - hidden by default */
+  .burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .burger-menu span {
+    width: 100%;
+    height: 3px;
+    background-color: rgb(216, 216, 216);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  /* Burger menu animation when active */
+  .burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .burger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+  /* Media Queries for Mobile */
+  @media screen and (max-width: 768px) {
+    nav {
+      height: 60px;
+    }
+
+    /* Show burger menu on mobile */
+    .burger-menu {
+      display: flex;
+    }
+
+    /* Hide regular navigation on mobile */
+    nav ul {
+      position: fixed;
+      top: 60px;
+      right: -100%;
+      width: 100%;
+      height: calc(100vh - 60px);
+      background-color: #222;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      transition: right 0.3s ease;
+      padding-top: 50px;
+      z-index: 1000;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Show mobile menu when open */
+    nav ul.mobile-menu-open {
+      right: 0;
+    }
+
+    /* Add overlay effect when menu is open */
+    nav ul.mobile-menu-open::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    nav ul li {
+      margin: 20px 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    nav ul li a {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    nav ul li:last-child a {
+      border-bottom: none;
+    }
+  }
+
+  /* Additional mobile breakpoint for smaller screens */
+  @media screen and (max-width: 480px) {
+    nav {
+      height: 50px;
+    }
+
+    nav ul {
+      top: 50px;
+      height: calc(100vh - 50px);
+    }
+
+    .burger-menu {
+      width: 25px;
+      height: 25px;
+      right: 15px;
+    }
+
+    nav ul li a {
+      font-size: 16px;
+      padding: 18px;
+    }
   }
   
