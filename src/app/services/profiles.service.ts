@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Profile {
-  id: number;
+  id: string; 
   name: string;
   job_title: string;
   job_description: string;
@@ -38,9 +38,8 @@ export class ProfilesService {
       })
     );
   }
-
   // GET method to fetch a specific profile by ID
-  getProfileById(id: number): Observable<Profile> {
+  getProfileById(id: string): Observable<Profile> {
     return this.http.get<Profile>(`${this.apiUrl}${id}/`);
   }
 }

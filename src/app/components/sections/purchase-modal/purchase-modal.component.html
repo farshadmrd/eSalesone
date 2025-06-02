@@ -1,0 +1,39 @@
+<div class="modal-backdrop" *ngIf="isVisible" (click)="onBackdropClick($event)">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Add to Cart</h3>
+      <button class="close-btn" (click)="onClose()">
+        <span>&times;</span>
+      </button>
+    </div>
+    
+    <div class="modal-body" *ngIf="serviceData">
+      <div class="service-info">
+        <div class="service-icon">
+          <img [src]="serviceData.serviceIcon" [alt]="serviceData.serviceTitle + ' icon'">
+        </div>
+        <div class="service-details">
+          <h4>{{ serviceData.serviceTitle }}</h4>
+          <div class="package-info">
+            <span class="package-name">{{ serviceData.packageName }} Package</span>
+            <span class="package-price">${{ serviceData.price }}</span>
+          </div>
+        </div>
+      </div>
+        <div class="features-list">
+        <h5>Included Features:</h5>
+        <ul>
+          <li *ngFor="let feature of serviceData.features; trackBy: trackByFeature">
+            <span class="checkmark">✓</span>
+            {{ feature }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="cancel-btn" (click)="onClose()">Cancel</button>
+      <button class="confirm-btn" (click)="onConfirmPurchase()">Add to Cart & Checkout</button>
+    </div>
+  </div>
+</div>

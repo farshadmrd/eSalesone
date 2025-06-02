@@ -1,12 +1,40 @@
 :root {
     --primary-color: #1e88e5;
     --background-color: #000000;
+    --transition-speed: 0.2s; /* Default transition speed */
   }
 
 *{
     margin: 0;
     padding: 0;
     cursor: none !important;
+    /* Optimize for performance */
+    box-sizing: border-box;
+}
+
+/* Performance optimization: Use transition speed variable */
+* {
+    transition: var(--transition-speed) ease;
+}
+
+/* Modal performance optimizations */
+body.modal-open {
+    overflow: hidden;
+    /* Disable pointer events on background when modal is open */
+    pointer-events: none;
+}
+
+body.modal-open .modal-backdrop,
+body.modal-open .modal-container {
+    pointer-events: auto;
+}
+
+/* Force hardware acceleration for smooth animations */
+.modal-backdrop,
+.modal-container,
+app-cursor {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 .container{

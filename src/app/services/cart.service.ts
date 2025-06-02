@@ -21,21 +21,23 @@ export class CartService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.loadCartFromStorage();
   }
-
   addToCart(item: CartItem) {
-    const currentItems = this.cartItemsSubject.value;
-    const existingItemIndex = currentItems.findIndex(cartItem => cartItem.id === item.id);
-    
-    if (existingItemIndex > -1) {
-      // Replace existing item
-      currentItems[existingItemIndex] = item;
-    } else {
-      // Add new item
-      currentItems.push(item);
-    }
-    
-    this.cartItemsSubject.next(currentItems);
-    this.saveCartToStorage();
+    // Use requestAnimationFrame to batch DOM updates
+    requestAnimationFrame(() => {
+      const currentItems = [...this.cartItemsSubject.value]; // Create new array reference
+      const existingItemIndex = currentItems.findIndex(cartItem => cartItem.id === item.id);
+      
+      if (existingItemIndex > -1) {
+        // Replace existing item
+        currentItems[existingItemIndex] = item;
+      } else {
+        // Add new item
+        currentItems.push(item);
+      }
+      
+      this.cartItemsSubject.next(currentItems);
+      this.saveCartToStorage();
+    });
   }
 
   removeFromCart(itemId: string) {
