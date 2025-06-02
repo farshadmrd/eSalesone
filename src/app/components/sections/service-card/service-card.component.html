@@ -13,8 +13,18 @@
       </div>
       <ul class="features">
         <li *ngFor="let feature of pricing.features">{{ feature }}</li>
-      </ul>
-      <button class="purchase-btn" (click)="onSelectPackage(pricing)">Select Package</button>
+      </ul>      <button class="purchase-btn" (click)="onSelectPackage(pricing)" [disabled]="isModalVisible">
+        Select Package
+      </button>
     </div>
   </div>
 </div>
+
+<!-- Purchase Modal - Only render when visible -->
+<app-purchase-modal 
+  *ngIf="isModalVisible"
+  [isVisible]="isModalVisible"
+  [serviceData]="selectedServiceData"
+  (closeModal)="onCloseModal()"
+  (confirmPurchase)="onConfirmPurchase($event)">
+</app-purchase-modal>
