@@ -10,7 +10,7 @@ export class PhotoServicesService {
       id: 1,
       icon: 'assets/img/services/photo-icon.svg', 
       title: 'Photography',
-      description: 'High-quality photography services for all occasions with expert equipment and direction.',
+      description: 'Professional photography for every occasion with expert gear and guidance.',
       pricing: [
         {
           name: 'Basic',

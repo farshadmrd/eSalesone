@@ -126,6 +126,11 @@ img {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .masked-text {
+    font-size: 8.625rem;
+  }
+}
 
 @media screen and (max-width: 640px) {
   .description-text {

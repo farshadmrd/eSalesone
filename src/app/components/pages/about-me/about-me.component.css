@@ -18,7 +18,7 @@
   margin-top: 8px;
   width: 500px;
   text-justify: inter-word;
-  font-size: 20px;
+  font-size: 1rem;
 }
 .use-my-service{
   margin-top: 24px;
@@ -81,5 +81,41 @@
   height: 100%;
   z-index: 1;
   object-fit: cover;
-  border: 1px solid #333;
 }
+@media screen and (min-width: 2560px) {
+
+}
+@media screen and (max-width: 1280px) {
+  .about-me-text {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 1024px) {
+   .about-me-text {
+    width: 330px;
+  }
+  .wrapper {
+    width: 300px;
+    height: 400px;
+  }
+}
+@media screen and (max-width: 768px) {
+    .about-me-title{
+          color: #e9e9e9;
+
+    }
+
+  .about-me-content{
+    position: relative;
+    z-index: 200;
+  }
+   .about-me-text {
+    width: 330px;
+    color: #e9e9e9;
+  }
+  .wrapper {
+    width: 300px;
+    height: 400px;
+  }
+}
+@media screen and (max-width: 640px) {}
