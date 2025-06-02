@@ -1,17 +1,23 @@
 <nav>
   <!-- Burger menu button for mobile -->
-  <button class="burger-menu" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+  <button 
+    class="burger-menu" 
+    (click)="toggleMobileMenu()" 
+    [class.active]="isMobileMenuOpen"
+    [attr.aria-expanded]="isMobileMenuOpen"
+    aria-label="Toggle navigation menu"
+    type="button">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
   <!-- Navigation menu -->
-  <ul [class.mobile-menu-open]="isMobileMenuOpen">
-    <li><a href="#" (click)="handleClick(); closeMobileMenu(); $event.preventDefault()" >About Me</a></li>
-    <li><a href="#" (click)="handleServicesClick('page3'); closeMobileMenu(); $event.preventDefault()">My Services</a></li>
-    <li><a href="#" (click)="handleServicesClick('checkout'); closeMobileMenu(); $event.preventDefault()">Checkout</a></li>
-    <li><a href="#" (click)="closeMobileMenu()">Works</a></li>
-    <li><a href="#" (click)="closeMobileMenu()">Contact Me</a></li>
+  <ul [class.mobile-menu-open]="isMobileMenuOpen" role="menu" [attr.aria-hidden]="!isMobileMenuOpen">
+    <li role="none"><a href="#" role="menuitem" (click)="handleClick(); closeMobileMenu(); $event.preventDefault()" >About Me</a></li>
+    <li role="none"><a href="#" role="menuitem" (click)="handleServicesClick('page3'); closeMobileMenu(); $event.preventDefault()">My Services</a></li>
+    <li role="none"><a href="#" role="menuitem" (click)="handleServicesClick('checkout'); closeMobileMenu(); $event.preventDefault()">Checkout</a></li>
+    <li role="none"><a href="#" role="menuitem" (click)="closeMobileMenu()">Works</a></li>
+    <li role="none"><a href="#" role="menuitem" (click)="closeMobileMenu()">Contact Me</a></li>
   </ul>
 </nav>

@@ -4,7 +4,7 @@
   width: 100%;
   background: #000000;
   position: relative;
-  min-height: 18vh;
+  height: 18vh;
 }
 
 .logo-track {
@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px 3.75rem 0px 3.75rem;
+  padding: 0px 3.75rem 0rem 3.75rem;
   /* filter: grayscale(100%); */
 
 }
@@ -24,7 +24,7 @@
 .logo-item img {
   filter: brightness(50%);
   width: 20rem;
-  height: 13.75rem;
+  height: 10.75rem;
   object-fit: contain;
 }
 
@@ -38,15 +38,16 @@
   }
 }
 
-@media screen and (min-width: 2560px) {
 
+@media screen and (min-width: 2560px) {
+  
   .logo-item img {
-    height: 15rem;
+    height: 12rem;
   }
 }
-@media screen and (max-width: 1920px) {
-
-  .logo-item img {
+@media screen and (max-width: 1280px) {
+   .logo-item img {
     height: 10.75rem;
   }
+  
 }

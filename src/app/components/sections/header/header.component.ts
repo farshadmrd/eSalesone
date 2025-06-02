@@ -1,4 +1,4 @@
-import { Component,input,inject, HostListener } from '@angular/core';
+import { Component,input,inject, HostListener, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TriggerAnimationService } from "../../../services/trigger-animation.service";
 import { ScrollToService } from "../../../services/scroll-to.services";
@@ -9,20 +9,42 @@ import { ScrollToService } from "../../../services/scroll-to.services";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   TriggerAnimationService=inject(TriggerAnimationService); //trigger animation of about me
   scrollToService = inject(ScrollToService); // scroll to service
   router = inject(Router);
   route = inject(ActivatedRoute);
-  
-  // Mobile menu state
+    // Mobile menu state
   isMobileMenuOpen = false;
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.updateBodyScrollLock();
   }
+
   closeMobileMenu() {
-    this.isMobileMenuOpen = false;
+    if (this.isMobileMenuOpen) {
+      this.isMobileMenuOpen = false;
+      this.updateBodyScrollLock();
+    }
+  }
+
+  private updateBodyScrollLock() {
+    if (typeof document !== 'undefined') {
+      if (this.isMobileMenuOpen) {
+        document.body.classList.add('mobile-menu-open');
+      } else {
+        document.body.classList.remove('mobile-menu-open');
+      }
+    }
+  }
+
+  // Handle keyboard navigation
+  @HostListener('document:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.isMobileMenuOpen) {
+      this.closeMobileMenu();
+    }
   }
 
   // Close mobile menu when clicking outside
@@ -69,6 +91,13 @@ export class HeaderComponent {
       }
     } else if (sectionId === 'checkout') {
       this.router.navigate(['/checkout']);
+    }
+  }
+
+  ngOnDestroy() {
+    // Clean up body scroll lock on component destruction
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('mobile-menu-open');
     }
   }
 
