@@ -11,20 +11,20 @@
       <span>t</span>
       <span>t</span>
     </div> -->
-    <div class="description-text">
+    <div class="description-text" *ngIf="lastProfile">
       <h3 [style.color]="'#e3e3e3'">
-        AN AWARD-WINNING PHOTOGRAPHER WHOSE LENS TRANSFORMS MOMENTS INTO
-        TIMELESS MASTERPIECES
+        {{ lastProfile.job_description }}
       </h3>
     </div>
 
-    <div class="title-text"
-      [ngStyle]="{
-       
-      }"
-    >
-      <h3 [style.color]="'#e3e3e3'">SQUIDWOD TENPOLES</h3>
-      <h3 [style.color]="'#464646'">AWARD WINNING PHOTOGRAPHER</h3>
+    <div class="title-text" *ngIf="lastProfile">
+      <h3 [style.color]="'#e3e3e3'">{{ lastProfile.name }}</h3>
+      <h3 [style.color]="'#464646'">{{ lastProfile.job_title }}</h3>
+    </div>
+
+    <!-- Loading state -->
+    <div class="loading" *ngIf="!lastProfile">
+      <p>Loading profile data...</p>
     </div>
 
     <img src="assets/img/landing.png" alt="landing" />
