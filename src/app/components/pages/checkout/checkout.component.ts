@@ -24,30 +24,9 @@ export class CheckoutComponent implements OnInit {
     this.initializeForm();
     this.loadCartItems();
   }
-
   loadCartItems() {
     this.cartService.cartItems$.subscribe(items => {
       this.orderSummary = items;
-      
-      // If cart is empty, show sample data
-      if (items.length === 0) {
-        this.orderSummary = [
-          {
-            id: 'sample-1',
-            title: 'Portrait Photography',
-            package: 'Premium Package',
-            price: 299,
-            features: ['2-hour session', 'Professional editing', '50 high-res photos']
-          },
-          {
-            id: 'sample-2',
-            title: 'Event Photography',
-            package: 'Standard Package',
-            price: 499,
-            features: ['4-hour coverage', 'Basic editing', '100 photos']
-          }
-        ];
-      }
     });
   }
 
@@ -139,5 +118,9 @@ export class CheckoutComponent implements OnInit {
       if (field.errors['minlength']) return `${fieldName} is too short`;
     }
     return '';
+  }
+
+  clearCartStorage() {
+    this.cartService.clearCart();
   }
 }
