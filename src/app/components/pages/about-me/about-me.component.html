@@ -1,22 +1,25 @@
 <div class="container">
-  <div class="about-me">
-    <div class="about-me-content">
-    <h1 class="about-me-title">ABOUT ME</h1>
-    <p class="about-me-text">
-      DISTINGUISHED BY A MYRIAD OF ACCOLADES AND INTERNATIONAL RECOGNITION,
-      SQUIDWOD STANDS AS A LUMINARY IN THE REALM OF VISUAL STORYTELLING
-    </p>
-    <button (click)="handleServicesClick('page3')" class="use-my-service">Use my services</button>
+  <div class="about-me" *ngIf="lastProfile">
+    <div class="about-me-content" >
+      <h1 class="about-me-title">{{ lastProfile.title }}</h1>
+
+
+      <p class="about-me-text">
+       {{ lastProfile.description }}
+      </p>
+      <button (click)="handleServicesClick('page3')" class="use-my-service">
+        Use my services
+      </button>
     </div>
     <div (click)="TriggerAnimationService.triggerAnimation()" class="wrapper">
       <img
-        src="assets/img/landing.png"
+        src="{{lastProfile.profile_picture}}"
         alt="Background"
         class="background-img"
         [class.animate-bg]="TriggerAnimationService.animate"
       />
       <img
-        src="assets/img/landing.png"
+        src="{{lastProfile.secondary_picture}}"
         alt="Foreground"
         class="foreground-img"
       />

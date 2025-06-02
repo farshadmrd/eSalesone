@@ -6,12 +6,12 @@ import { map } from 'rxjs/operators';
 export interface Profile {
   id: number;
   name: string;
-  email: string;
   job_title: string;
   job_description: string;
   profile_picture: string;
   secondary_picture: string;
   title: string;
+  description: string;
 }
 
 @Injectable({
