@@ -180,16 +180,21 @@
         <div class="summary-items" *ngIf="orderSummary.length > 0">
           <div class="cart-actions" *ngIf="orderSummary.length > 0">
             <button class="clear-cart-btn" (click)="clearCartStorage()">Clear Cart</button>
-          </div>
-          <div class="summary-item" *ngFor="let item of orderSummary">
+          </div>          <div class="summary-item" *ngFor="let item of orderSummary">
             <div class="item-info">
               <h3>{{ item.title }}</h3>
               <p class="package-name">{{ item.package }}</p>
               <ul class="features-list">
                 <li *ngFor="let feature of item.features">{{ feature }}</li>
               </ul>
-            </div>            <div class="item-actions">
-              <div class="item-price">${{ item.price }}</div>
+            </div>
+            <div class="item-actions">
+              <div class="quantity-controls">
+                <button class="qty-btn minus" (click)="decreaseQuantity(item)">-</button>
+                <span class="quantity">{{item.quantity || 1}}</span>
+                <button class="qty-btn plus" (click)="increaseQuantity(item)">+</button>
+              </div>
+              <div class="item-price">${{ (item.price * (item.quantity || 1)).toFixed(2) }}</div>
               <button class="remove-btn" (click)="removeItem(item.id)">×</button>
             </div>
           </div>

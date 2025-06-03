@@ -79,9 +79,25 @@ export class CheckoutComponent implements OnInit {
   getTotal(): number {
     return this.cartService.getTotal();
   }
-
   removeItem(itemId: string) {
     this.cartService.removeFromCart(itemId);
+  }
+
+  updateQuantity(itemId: string, quantity: number) {
+    this.cartService.updateQuantity(itemId, quantity);
+  }
+
+  increaseQuantity(item: CartItem) {
+    this.cartService.updateQuantity(item.id, (item.quantity || 1) + 1);
+  }
+
+  decreaseQuantity(item: CartItem) {
+    const currentQuantity = item.quantity || 1;
+    if (currentQuantity > 1) {
+      this.cartService.updateQuantity(item.id, currentQuantity - 1);
+    } else {
+      this.removeItem(item.id);
+    }
   }
   onSubmit() {
     if (this.checkoutForm.valid) {
