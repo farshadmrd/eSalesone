@@ -12,6 +12,7 @@ export interface Profile {
   secondary_picture: string;
   title: string;
   description: string;
+  log_bar_images: string[];
 }
 
 @Injectable({
@@ -41,5 +42,16 @@ export class ProfilesService {
   // GET method to fetch a specific profile by ID
   getProfileById(id: string): Observable<Profile> {
     return this.http.get<Profile>(`${this.apiUrl}${id}/`);
+  }
+  // GET method to fetch logo bar images from the last profile
+  getLogoBarImages(): Observable<string[]> {
+    return this.getLastProfile().pipe(
+      map((profile: Profile | null) => {
+        if (profile && profile.log_bar_images) {
+          return profile.log_bar_images;
+        }
+        return []; // Return empty array if no profile or no log_bar_images
+      })
+    );
   }
 }
