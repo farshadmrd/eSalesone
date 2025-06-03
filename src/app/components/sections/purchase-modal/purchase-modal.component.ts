@@ -91,6 +91,26 @@ export class PurchaseModalComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
+  onAddToBasket() {
+    if (!this.serviceData) return;
+    
+    const cartItem: CartItem = {
+      id: `${this.serviceData.serviceTitle}-${this.serviceData.packageName}`,
+      title: this.serviceData.serviceTitle,
+      package: this.serviceData.packageName,
+      price: this.serviceData.price,
+      features: [...this.serviceData.features],
+      serviceIcon: this.serviceData.serviceIcon
+    };
+    
+    // Add to cart but don't navigate to checkout
+    requestAnimationFrame(() => {
+      this.cartService.addToCart(cartItem);
+      this.confirmPurchase.emit(cartItem);
+      this.onClose();
+    });
+  }
+
   onBackdropClick(event: Event) {
     if (event.target === event.currentTarget) {
       this.onClose();
