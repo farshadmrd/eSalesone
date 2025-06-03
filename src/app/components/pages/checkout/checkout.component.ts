@@ -19,10 +19,16 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
-  ngOnInit() {
+  ) {}  ngOnInit() {
     this.initializeForm();
     this.loadCartItems();
+    this.scrollToTop();
+  }
+
+  private scrollToTop() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
   loadCartItems() {
     this.cartService.cartItems$.subscribe(items => {
