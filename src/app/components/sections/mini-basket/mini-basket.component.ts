@@ -16,33 +16,39 @@ export class MiniBasketComponent implements OnInit, OnDestroy {  cartService = i
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
     cartItems: CartItem[] = [];
-  isVisible = false;
-  autoHideTimeout?: number;
+  isVisible = false;  autoHideTimeout?: number;
   private cartSubscription?: Subscription;
   private itemAddedSubscription?: Subscription;
-
-  ngOnInit() {    // Listen to cart changes
+  private hideSubscription?: Subscription;  ngOnInit() {
+    // Listen to cart changes
     this.cartSubscription = this.cartService.cartItems$.subscribe(items => {
       this.cartItems = items;
       this.cdr.markForCheck(); // Manually trigger change detection
     });
     
     // Listen to item additions to show mini basket
-    this.itemAddedSubscription = this.cartService.itemAdded$.subscribe(() => {
-      this.showMiniBasket();
-      this.cdr.markForCheck(); // Manually trigger change detection
+    this.itemAddedSubscription = this.cartService.itemAdded$.subscribe((item) => {
+      // Ensure we show the mini-basket after item is added
+      // Use a small delay to ensure DOM is updated
+      setTimeout(() => {
+        this.showMiniBasket();
+        this.cdr.detectChanges(); // Force change detection
+      }, 50);
+    });
+
+    // Listen for hide events
+    this.hideSubscription = this.cartService.miniBasketHide$.subscribe(() => {
+      this.hideMiniBasket();
     });
   }
-
   ngOnDestroy() {
     this.cartSubscription?.unsubscribe();
     this.itemAddedSubscription?.unsubscribe();
+    this.hideSubscription?.unsubscribe();
     if (this.autoHideTimeout) {
       clearTimeout(this.autoHideTimeout);
     }
-  }
-
-  showMiniBasket() {
+  }showMiniBasket() {
     this.isVisible = true;
     
     // Auto-hide after 5 seconds

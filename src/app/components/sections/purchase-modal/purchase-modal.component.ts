@@ -63,9 +63,7 @@ export class PurchaseModalComponent implements OnInit, OnDestroy, OnChanges {
     document.dispatchEvent(new CustomEvent('modalClose'));
   }onClose() {
     this.closeModal.emit();
-  }
-
-  onConfirmPurchase() {
+  }  onConfirmPurchase() {
     if (!this.serviceData) return;
     
     // Debounce to prevent double-clicks
@@ -80,7 +78,10 @@ export class PurchaseModalComponent implements OnInit, OnDestroy, OnChanges {
     
     // Use batch operations for better performance
     requestAnimationFrame(() => {
-      this.cartService.addToCart(cartItem);
+      // Don't show mini-basket when going directly to checkout
+      this.cartService.addToCart(cartItem, false);
+      // Ensure mini-basket is hidden before navigation
+      this.cartService.hideMiniBasket();
       this.confirmPurchase.emit(cartItem);
       this.onClose();
       

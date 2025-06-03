@@ -22,9 +22,12 @@ export class CartService {
   private itemAddedSubject = new Subject<CartItem>();
   public itemAdded$ = this.itemAddedSubject.asObservable();
 
+  private miniBasketHideSubject = new Subject<void>();
+  public miniBasketHide$ = this.miniBasketHideSubject.asObservable();
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.loadCartFromStorage();
-  }  addToCart(item: CartItem) {
+  }  addToCart(item: CartItem, showMiniBasket: boolean = true) {
     // Use requestAnimationFrame to batch DOM updates
     requestAnimationFrame(() => {
       const currentItems = [...this.cartItemsSubject.value]; // Create new array reference
@@ -41,8 +44,10 @@ export class CartService {
       this.cartItemsSubject.next(currentItems);
       this.saveCartToStorage();
       
-      // Notify that an item was added
-      this.itemAddedSubject.next(item);
+      // Only notify that an item was added if we want to show mini-basket
+      if (showMiniBasket) {
+        this.itemAddedSubject.next(item);
+      }
     });
   }
 
@@ -104,5 +109,9 @@ export class CartService {
         }
       }
     }
+  }
+
+  hideMiniBasket() {
+    this.miniBasketHideSubject.next();
   }
 }

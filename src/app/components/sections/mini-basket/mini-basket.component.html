@@ -1,11 +1,11 @@
-<div class="mini-basket" [class.visible]="isVisible && cartItems.length > 0">
+<div class="mini-basket" [class.visible]="isVisible">
   <div class="mini-basket-header">
     <h3>🛒 Item Added to Basket!</h3>
     <button class="close-btn" (click)="hideMiniBasket()">×</button>
   </div>
   
   <div class="mini-basket-content">
-    <div class="cart-summary">
+    <div class="cart-summary" *ngIf="cartItems.length > 0">
       <span class="item-count">{{getTotalItems()}} item(s)</span>
       <span class="total-price">${{getTotalPrice().toFixed(2)}}</span>
     </div>
@@ -30,7 +30,11 @@
       </div>
     </div>
     
-    <div class="mini-basket-actions">
+    <div class="empty-cart-message" *ngIf="cartItems.length === 0">
+      <p>No items in cart yet</p>
+    </div>
+    
+    <div class="mini-basket-actions" *ngIf="cartItems.length > 0">
       <button class="continue-btn" (click)="continueShopping()">Continue Shopping</button>
       <button class="checkout-btn" (click)="goToCheckout()">View Cart & Checkout</button>
     </div>

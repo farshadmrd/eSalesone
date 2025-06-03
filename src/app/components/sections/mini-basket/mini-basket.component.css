@@ -264,3 +264,15 @@
 .mini-basket.visible {
   animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.empty-cart-message {
+  text-align: center;
+  padding: 20px;
+  color: #a0a0a0;
+  font-style: italic;
+}
+
+.empty-cart-message p {
+  margin: 0;
+  font-size: 14px;
+}
