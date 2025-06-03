@@ -1,19 +1,19 @@
 <div class="service-card">
   <div class="service-icon">
-    <img [src]="service.icon" alt="{{ service.title }} icon">
+    <img [src]="service.logo" alt="{{ service.title }} icon">
   </div>
   <h3 class="service-title">{{ service.title }}</h3>
   <p class="service-description">{{ service.description }}</p>
-  
-  <div class="pricing-options" *ngIf="service.pricing && service.pricing.length > 0">
-    <div *ngFor="let pricing of service.pricing" class="pricing-tier" [class.recommended]="pricing.recommended">
+  <div class="pricing-options" *ngIf="getActiveServiceTypes().length > 0">
+    <div *ngFor="let serviceType of getActiveServiceTypes(); trackBy: trackByServiceType" class="pricing-tier" [class.recommended]="serviceType.recommended">
       <div class="pricing-header">
-        <h4>{{ pricing.name }}</h4>
-        <span class="price">${{ pricing.price }}</span>
+        <h4>{{ serviceType.name }}</h4>
+        <span class="price">${{ serviceType.price }}</span>
       </div>
       <ul class="features">
-        <li *ngFor="let feature of pricing.features">{{ feature }}</li>
-      </ul>      <button class="purchase-btn" (click)="onSelectPackage(pricing)" [disabled]="isModalVisible">
+        <li *ngFor="let feature of serviceType.description; trackBy: trackByFeature">{{ feature }}</li>
+      </ul>
+      <button class="purchase-btn" (click)="onSelectPackage(serviceType)" [disabled]="isModalVisible">
         Select Package
       </button>
     </div>

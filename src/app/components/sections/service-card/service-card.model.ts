@@ -1,14 +1,18 @@
 export interface ServiceCard {
-  id: number;
-  icon: string;
+  id: string;
   title: string;
+  logo: string;
   description: string;
-  pricing?: ServicePricing[];
+  is_active: boolean;
+  types: ServiceType[];
 }
 
-export interface ServicePricing {
+export interface ServiceType {
+  id: string;
   name: string;
-  price: number;
-  features: string[];
+  description: string[];
+  price: string;
+  is_active: boolean;
+  service: string;
   recommended?: boolean;
 }

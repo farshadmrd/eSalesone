@@ -1,7 +1,7 @@
 import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ServiceCard } from './service-card.model';
+import { ServiceCard, ServiceType } from './service-card.model';
 import { CartService, CartItem } from '../../../services/cart.service';
 import { PurchaseModalComponent } from '../purchase-modal/purchase-modal.component';
 
@@ -30,8 +30,7 @@ export class ServiceCardComponent {
   isModalVisible = false;
   selectedServiceData: ServiceData | null = null;
   private isProcessing = false; // Prevent double-clicks
-
-  onSelectPackage(pricing: any) {
+  onSelectPackage(serviceType: ServiceType) {
     if (this.isProcessing || this.isModalVisible) return;
     
     this.isProcessing = true;
@@ -40,10 +39,10 @@ export class ServiceCardComponent {
     requestAnimationFrame(() => {
       this.selectedServiceData = {
         serviceTitle: this.service.title,
-        packageName: pricing.name,
-        price: pricing.price,
-        features: [...pricing.features], // Create new array reference
-        serviceIcon: this.service.icon
+        packageName: serviceType.name,
+        price: parseFloat(serviceType.price), // Convert string to number
+        features: [...serviceType.description], // Create new array reference
+        serviceIcon: this.service.logo // Use logo instead of icon
       };
       
       this.isModalVisible = true;
@@ -63,12 +62,17 @@ export class ServiceCardComponent {
     // Additional logic if needed after purchase confirmation
     console.log('Item added to cart:', cartItem);
   }
-
   // TrackBy functions for performance optimization
-  trackByPrice(index: number, pricing: any): any {
-    return pricing.name || index;
+  trackByServiceType(index: number, serviceType: ServiceType): string {
+    return serviceType.id || serviceType.name || index.toString();
   }
+  
   trackByFeature(index: number, feature: string): string {
     return feature || index.toString();
+  }
+
+  // Method to get only active service types
+  getActiveServiceTypes(): ServiceType[] {
+    return this.service.types?.filter(serviceType => serviceType.is_active === true) || [];
   }
 }
