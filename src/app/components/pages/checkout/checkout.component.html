@@ -206,14 +206,13 @@
           <div class="total-row">
             <span>Subtotal:</span>
             <span>${{ getTotal() }}</span>
-          </div>
-          <div class="total-row">
+          </div>          <div class="total-row">
             <span>Tax:</span>
-            <span>${{ (getTotal() * 0.08).toFixed(2) }}</span>
+            <span>${{ (getTotal() * 0.10).toFixed(2) }}</span>
           </div>
           <div class="total-row final-total">
             <span>Total:</span>
-            <span>${{ (getTotal() * 1.08).toFixed(2) }}</span>
+            <span>${{ (getTotal() * 1.10).toFixed(2) }}</span>
           </div>
         </div>
       </div>
