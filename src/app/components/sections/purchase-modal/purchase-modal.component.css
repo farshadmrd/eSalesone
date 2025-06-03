@@ -157,6 +157,9 @@
 /* Modal Footer */
 .modal-footer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
   padding: 20px 24px;
   border-top: 1px solid #464646;
@@ -164,7 +167,8 @@
 }
 
 .cancel-btn,
-.confirm-btn {
+.confirm-btn,
+.add-to-basket-btn {
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
@@ -178,6 +182,7 @@
 .cancel-btn {
   background: #555;
   color: #e3e3e3;
+  margin-right: 12px;
 }
 
 .cancel-btn:hover {
@@ -195,6 +200,19 @@
 
 .confirm-btn:active {
   background: #3d8b40;
+}
+
+.add-to-basket-btn {
+  background: #2196F3;
+  color: white;
+}
+
+.add-to-basket-btn:hover {
+  background: #1976D2;
+}
+
+.add-to-basket-btn:active {
+  background: #1565C0;
 }
 
 /* Responsive Design */
