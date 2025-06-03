@@ -1,0 +1,38 @@
+<div class="mini-basket" [class.visible]="isVisible && cartItems.length > 0">
+  <div class="mini-basket-header">
+    <h3>🛒 Item Added to Basket!</h3>
+    <button class="close-btn" (click)="hideMiniBasket()">×</button>
+  </div>
+  
+  <div class="mini-basket-content">
+    <div class="cart-summary">
+      <span class="item-count">{{getTotalItems()}} item(s)</span>
+      <span class="total-price">${{getTotalPrice().toFixed(2)}}</span>
+    </div>
+    
+    <div class="cart-items" *ngIf="cartItems.length > 0">
+      <div class="cart-item" *ngFor="let item of cartItems.slice(-3); trackBy: trackByItem">
+        <div class="item-info">
+          <div class="item-title">{{item.title}}</div>
+          <div class="item-package">{{item.package}}</div>
+          <div class="item-price">${{item.price.toFixed(2)}}</div>
+        </div>
+        
+        <div class="quantity-controls">
+          <button class="qty-btn minus" (click)="decreaseQuantity(item)">-</button>
+          <span class="quantity">{{item.quantity || 1}}</span>
+          <button class="qty-btn plus" (click)="increaseQuantity(item)">+</button>
+        </div>
+      </div>
+      
+      <div class="more-items" *ngIf="cartItems.length > 3">
+        <span>+ {{cartItems.length - 3}} more item(s)</span>
+      </div>
+    </div>
+    
+    <div class="mini-basket-actions">
+      <button class="continue-btn" (click)="continueShopping()">Continue Shopping</button>
+      <button class="checkout-btn" (click)="goToCheckout()">View Cart & Checkout</button>
+    </div>
+  </div>
+</div>

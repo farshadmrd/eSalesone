@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export interface CartItem {
   id: string;
@@ -9,6 +9,7 @@ export interface CartItem {
   price: number;
   features: string[];
   serviceIcon?: string;
+  quantity?: number;
 }
 
 @Injectable({
@@ -17,27 +18,49 @@ export interface CartItem {
 export class CartService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   public cartItems$ = this.cartItemsSubject.asObservable();
+  
+  private itemAddedSubject = new Subject<CartItem>();
+  public itemAdded$ = this.itemAddedSubject.asObservable();
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.loadCartFromStorage();
-  }
-  addToCart(item: CartItem) {
+  }  addToCart(item: CartItem) {
     // Use requestAnimationFrame to batch DOM updates
     requestAnimationFrame(() => {
       const currentItems = [...this.cartItemsSubject.value]; // Create new array reference
       const existingItemIndex = currentItems.findIndex(cartItem => cartItem.id === item.id);
       
       if (existingItemIndex > -1) {
-        // Replace existing item
-        currentItems[existingItemIndex] = item;
+        // Increase quantity for existing item
+        currentItems[existingItemIndex].quantity = (currentItems[existingItemIndex].quantity || 1) + 1;
       } else {
-        // Add new item
-        currentItems.push(item);
+        // Add new item with quantity 1
+        currentItems.push({...item, quantity: 1});
       }
       
       this.cartItemsSubject.next(currentItems);
       this.saveCartToStorage();
+      
+      // Notify that an item was added
+      this.itemAddedSubject.next(item);
     });
+  }
+
+  updateQuantity(itemId: string, quantity: number) {
+    const currentItems = [...this.cartItemsSubject.value];
+    const itemIndex = currentItems.findIndex(item => item.id === itemId);
+    
+    if (itemIndex > -1) {
+      if (quantity <= 0) {
+        // Remove item if quantity is 0 or less
+        currentItems.splice(itemIndex, 1);
+      } else {
+        currentItems[itemIndex].quantity = quantity;
+      }
+      
+      this.cartItemsSubject.next(currentItems);
+      this.saveCartToStorage();
+    }
   }
 
   removeFromCart(itemId: string) {
@@ -55,13 +78,12 @@ export class CartService {
   getCartItems(): CartItem[] {
     return this.cartItemsSubject.value;
   }
-
   getTotal(): number {
-    return this.cartItemsSubject.value.reduce((total, item) => total + item.price, 0);
+    return this.cartItemsSubject.value.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
   }
 
   getItemCount(): number {
-    return this.cartItemsSubject.value.length;
+    return this.cartItemsSubject.value.reduce((count, item) => count + (item.quantity || 1), 0);
   }
   private saveCartToStorage() {
     if (isPlatformBrowser(this.platformId)) {
