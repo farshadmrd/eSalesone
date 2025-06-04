@@ -29,6 +29,8 @@ export interface CheckoutResponse {
   id?: string;
   message?: string;
   success?: boolean;
+  status?: string; // Can be 'APPROVED', 'DECLINED', 'FAILED', etc.
+  error_code?: string;
 }
 
 @Injectable({
@@ -43,24 +45,42 @@ export class CheckoutService {
       catchError(this.handleError)
     );
   }
-
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
+    let errorType = 'failed';
     
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      if (error.status === 402 || error.status === 403) {
+        errorType = 'declined';
+        errorMessage = 'Payment declined by your bank or card issuer';
+      } else if (error.status >= 400 && error.status < 500) {
+        errorType = 'declined';
+        errorMessage = error.error?.message || 'Payment declined - please check your payment details';
+      } else if (error.status >= 500) {
+        errorType = 'failed';
+        errorMessage = 'Server error - please try again later';
+      } else {
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+      
       if (error.error && error.error.message) {
         errorMessage = error.error.message;
       }
     }
     
     console.error('Checkout API Error:', errorMessage);
-    return throwError(errorMessage);
-  }  transformCartToBasket(cartItems: CartItem[]): BasketItem[] {
+    
+    // Return an error object with type information
+    const errorObj = new Error(errorMessage) as any;
+    errorObj.type = errorType;
+    errorObj.status = error.status;
+    
+    return throwError(errorObj);
+  }transformCartToBasket(cartItems: CartItem[]): BasketItem[] {
     return cartItems.map(item => ({
       service_type_id: item.serviceTypeId, // Use explicit serviceTypeId field
       quantity: item.quantity || 1

@@ -1,0 +1,131 @@
+<div class="thank-you-container">
+  <app-header></app-header>
+  
+  <div class="thank-you-content">
+    <div class="status-card" [ngClass]="getStatusClass()">
+      <div class="status-icon">
+        {{ getStatusIcon() }}
+      </div>
+      
+      <h1 class="status-title">{{ getStatusTitle() }}</h1>
+      
+      <p class="status-message">{{ getStatusMessage() }}</p>      <!-- Show actual error message from response -->
+     
+
+      <!-- Debug info (can be removed in production) -->
+      <div class="debug-info" *ngIf="orderData">
+        <p><small><strong>Server Status:</strong> {{ getServerResponseStatus() }}</small></p>
+        <p><small><strong>Is Declined:</strong> {{ isServerStatusDeclined() ? 'Yes' : 'No' }}</small></p>
+        <p><small><strong>Display Status:</strong> {{ orderStatus }}</small></p>
+      </div>
+        <div class="order-details" *ngIf="orderStatus === 'approved'">
+        <div class="detail-row">
+          <span class="label">Order ID:</span>
+          <span class="value">#{{ orderId }}</span>
+        </div>
+        <div class="detail-row" *ngIf="customerName">
+          <span class="label">Customer:</span>
+          <span class="value">{{ customerName }}</span>
+        </div>
+        <div class="detail-row" *ngIf="email">
+          <span class="label">Email:</span>
+          <span class="value">{{ email }}</span>
+        </div>
+        <div class="detail-row" *ngIf="orderDate">
+          <span class="label">Order Date:</span>
+          <span class="value">{{ orderDate }}</span>
+        </div>
+        <div class="detail-row" *ngIf="orderTotal > 0">
+          <span class="label">Total Amount:</span>
+          <span class="value">${{ orderTotal.toFixed(2) }}</span>
+        </div>
+        <div class="detail-row" *ngIf="orderItems.length > 0">
+          <span class="label">Items:</span>
+          <span class="value">{{ orderItems.length }} service(s)</span>
+        </div>
+      </div>
+
+      <!-- Order Items Summary -->
+      <div class="order-items" *ngIf="orderStatus === 'approved' && orderItems.length > 0">
+        <h3>Order Summary</h3>
+        <div class="items-list">
+          <div class="item" *ngFor="let item of orderItems">
+            <div class="item-info">
+              <span class="item-name">{{ item.name || item.title }}</span>
+              <span class="item-quantity">Qty: {{ item.quantity || 1 }}</span>
+            </div>
+            <span class="item-price">${{ (item.price * (item.quantity || 1)).toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-status-info">        <div class="info-section" [ngSwitch]="orderStatus">          <!-- Approved Status -->
+          <div *ngSwitchCase="'approved'" class="approved-info">
+            <!-- What happens next section - only for successful approved transactions -->
+            <div *ngIf="shouldShowNextSteps()" class="next-steps-container">
+              <h3 class="next-steps-title">What happens next?</h3>
+              <ul class="next-steps-list">
+                <li>✓ You will receive a confirmation email shortly</li>
+                <li>✓ Our team will contact you within 24 hours</li>
+                <li>✓ We'll schedule your service at your convenience</li>
+                <li>✓ Track your order status in your email</li>
+              </ul>
+            </div>
+            
+            <!-- Fallback message for approved but unsuccessful transactions -->
+            <div *ngIf="!shouldShowNextSteps()" class="approved-fallback">
+              <h3>Order Received</h3>
+              <p>Your order has been received but may require additional verification. We'll contact you shortly with updates.</p>
+            </div>
+          </div><!-- Declined Status -->
+          <div *ngSwitchCase="'declined'" class="declined-info">
+            <h3>Payment Failed - Order Declined</h3>
+            <div class="failed-error-message">
+              <p class="error-highlight">❌ Transaction Failed</p>
+              <p>Your payment was declined by the payment processor.</p>
+            </div>
+            <h4>Common reasons for declined payments:</h4>
+            <ul>
+              <li>• Payment method was declined by your bank</li>
+              <li>• Insufficient funds or credit limit reached</li>
+              <li>• Card details may be incorrect or expired</li>
+              <li>• Security concerns flagged by payment processor</li>
+              <li>• Card blocked for online transactions</li>
+            </ul>
+            <p class="suggestion">Please check your payment information and try again, or use a different payment method.</p>
+          </div>
+
+          <!-- Failed Status -->
+          <div *ngSwitchCase="'failed'" class="failed-info">
+            <h3>Technical Issue Occurred</h3>
+            <ul>
+              <li>• Connection timeout during processing</li>
+              <li>• Server temporarily unavailable</li>
+              <li>• Payment gateway error</li>
+              <li>• System maintenance in progress</li>
+            </ul>
+            <p class="suggestion">Please try again in a few minutes. If the problem persists, contact our support team.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="primary-btn" (click)="onActionClick()">
+          {{ getActionText() }}
+        </button>
+        <button class="secondary-btn" (click)="goHome()">
+          Back to Home
+        </button>
+      </div>
+
+      <div class="support-section" *ngIf="orderStatus !== 'approved'">
+        <h4>Need Help?</h4>
+        <p>Contact our support team:</p>
+        <div class="support-contacts">
+          <!-- <span>📧 support@esalesone.com</span> -->
+          <span>📞 1-800-ESALES-1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
