@@ -13,10 +13,13 @@ export const routes: Routes = [
   { 
     path: 'services', 
     loadComponent: () => import('./components/pages/my-services/my-services.component').then(c => c.MyServicesComponent) 
-  },
-  { 
+  },  { 
     path: 'checkout', 
     loadComponent: () => import('./components/pages/checkout/checkout.component').then(c => c.CheckoutComponent) 
+  },
+  { 
+    path: 'thank-you', 
+    loadComponent: () => import('./components/pages/thank-you/thank-you.component').then(c => c.ThankYouComponent) 
   },
   { path: '**', redirectTo: '/home' }
 ];

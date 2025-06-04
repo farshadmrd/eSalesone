@@ -1,9 +1,11 @@
 import { Component, OnInit, inject, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HeaderComponent } from '../../sections/header/header.component';
 import { CartService, CartItem } from '../../../services/cart.service';
 import { CheckoutService, CheckoutRequest } from '../../../services/checkout.service';
+import { OrderService, OrderData } from '../../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -15,14 +17,15 @@ export class CheckoutComponent implements OnInit {
   checkoutForm!: FormGroup;
   orderSummary: CartItem[] = [];
   isSubmitting = false;
-  
   cartService = inject(CartService);
   checkoutService = inject(CheckoutService);
+  orderService = inject(OrderService);
+  private router = inject(Router);
 
   constructor(
     private fb: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}  ngOnInit() {
+  ) {}ngOnInit() {
     this.initializeForm();
     this.loadCartItems();
     this.scrollToTop();
@@ -207,31 +210,97 @@ export class CheckoutComponent implements OnInit {
         description: `Order for ${basket.length} service(s) - Total: $${this.getTotal()}`
       };
 
-      console.log('Submitting checkout request:', checkoutRequest);
-
-      this.checkoutService.submitCheckout(checkoutRequest).subscribe({
-        next: (response) => {
+      console.log('Submitting checkout request:', checkoutRequest);      this.checkoutService.submitCheckout(checkoutRequest).subscribe({        next: (response) => {
           console.log('Order submitted successfully:', response);
+          
+          // Prepare order data with actual server response
+          const orderData: OrderData = {
+            response: {
+              id: response.id || this.generateOrderId(),
+              status: response.status 
+            },
+            customerInfo: {
+              fullName: formValue.fullName,
+              email: formValue.email,
+              phone: formValue.phone,
+              address: formValue.address,
+              city: formValue.city,
+              state: formValue.state,
+              zipCode: formValue.zipCode
+            },
+            orderSummary: {
+              items: [...this.orderSummary],
+              total: this.getTotal(),
+              itemCount: this.orderSummary.length
+            },
+            timestamp: Date.now()
+          };
+
+          // Store order data
+          this.orderService.setOrderData(orderData);
           
           // Clear cart after successful submission (only in browser)
           if (isPlatformBrowser(this.platformId)) {
             this.cartService.clearCart();
-            alert('Order submitted successfully! Your transaction has been processed.');
           }
+          
+          // Navigate to thank you page
+          this.router.navigate(['/thank-you']);
+          
           this.isSubmitting = false;
-        },        error: (error) => {
+        },error: (error) => {
           console.error('Error submitting order:', error);
-          let errorMessage = 'Error submitting order. Please try again.';
           
-          if (typeof error === 'string') {
-            errorMessage = error;
-          } else if (error.message) {
-            errorMessage = error.message;
+          // Determine the actual status from server response
+          let serverStatus = 'FAILED';
+          let errorMessage = 'Order processing failed';
+          
+          // Check if the error contains server response data
+          if (error && typeof error === 'object') {
+            if (error.status) {
+              serverStatus = error.status.toString().toUpperCase();
+            } else if (error.error && error.error.status) {
+              serverStatus = error.error.status.toString().toUpperCase();
+            }
+            
+            if (error.message) {
+              errorMessage = error.message;
+            } else if (error.error && error.error.message) {
+              errorMessage = error.error.message;
+            }
           }
           
-          if (isPlatformBrowser(this.platformId)) {
-            alert(errorMessage);
-          }
+          // Prepare order data for error cases
+          const orderData: OrderData = {
+            response: {
+              id: this.generateOrderId(),
+              message: errorMessage,
+              success: false,
+              status: serverStatus // This will be 'DECLINED', 'FAILED', etc.
+            },
+            customerInfo: {
+              fullName: formValue.fullName,
+              email: formValue.email,
+              phone: formValue.phone,
+              address: formValue.address,
+              city: formValue.city,
+              state: formValue.state,
+              zipCode: formValue.zipCode
+            },
+            orderSummary: {
+              items: [...this.orderSummary],
+              total: this.getTotal(),
+              itemCount: this.orderSummary.length
+            },
+            timestamp: Date.now()
+          };
+
+          // Store order data
+          this.orderService.setOrderData(orderData);
+          
+          // Navigate to thank you page
+          this.router.navigate(['/thank-you']);
+          
           this.isSubmitting = false;
         }
       });
@@ -265,8 +334,11 @@ export class CheckoutComponent implements OnInit {
     }
     return '';
   }
-
   clearCartStorage() {
     this.cartService.clearCart();
+  }
+
+  private generateOrderId(): string {
+    return 'ORD-' + Date.now().toString().slice(-8);
   }
 }
