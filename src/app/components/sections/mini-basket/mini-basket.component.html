@@ -10,10 +10,10 @@
       <span class="total-price">${{getTotalPrice().toFixed(2)}}</span>
     </div>
     
-    <div class="cart-items" *ngIf="cartItems.length > 0">
-      <div class="cart-item" *ngFor="let item of cartItems.slice(-3); trackBy: trackByItem">
+    <div class="cart-items" *ngIf="cartItems.length > 0">      <div class="cart-item" *ngFor="let item of cartItems.slice(-3); trackBy: trackByItem">
         <div class="item-info">
           <div class="item-title">{{item.title}}</div>
+          <div class="item-service-type">{{item.serviceTypeName}}</div>
           <div class="item-package">{{item.package}}</div>
           <div class="item-price">${{item.price.toFixed(2)}}</div>
         </div>

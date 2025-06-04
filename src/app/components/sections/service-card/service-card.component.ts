@@ -6,8 +6,10 @@ import { CartService, CartItem } from '../../../services/cart.service';
 import { PurchaseModalComponent } from '../purchase-modal/purchase-modal.component';
 
 interface ServiceData {
+  serviceTypeId: string; // Add service type ID
   serviceTitle: string;
   packageName: string;
+  serviceTypeName: string; // Add service type name for display
   price: number;
   features: string[];
   serviceIcon: string;
@@ -36,10 +38,11 @@ export class ServiceCardComponent {
     this.isProcessing = true;
     
     // Use batch update to minimize change detection cycles
-    requestAnimationFrame(() => {
-      this.selectedServiceData = {
+    requestAnimationFrame(() => {      this.selectedServiceData = {
+        serviceTypeId: serviceType.id, // Add the actual service type ID
         serviceTitle: this.service.title,
         packageName: serviceType.name,
+        serviceTypeName: serviceType.name, // Add service type name for display
         price: parseFloat(serviceType.price), // Convert string to number
         features: [...serviceType.description], // Create new array reference
         serviceIcon: this.service.logo // Use logo instead of icon
