@@ -4,8 +4,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 
 export interface CartItem {
   id: string;
+  serviceTypeId: string; // Add explicit service type ID field
   title: string;
   package: string;
+  serviceTypeName: string; // Add service type name for better display
   price: number;
   features: string[];
   serviceIcon?: string;

@@ -198,6 +198,14 @@ input.error {
   font-weight: normal;
 }
 
+.service-type {
+  font-size: 13px;
+  color: #a0a0a0;
+  margin-bottom: 5px;
+  font-weight: lighter;
+  font-style: italic;
+}
+
 .package-name {
   font-size: 14px;
   color: rgba(255, 100, 100, 0.8);

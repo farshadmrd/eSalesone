@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { CartService, CartItem } from '../../../services/cart.service';
 
 interface ServiceData {
+  serviceTypeId: string; // Add service type ID
   serviceTitle: string;
   packageName: string;
+  serviceTypeName: string; // Add service type name for display
   price: number;
   features: string[];
   serviceIcon: string;
@@ -68,9 +70,11 @@ export class PurchaseModalComponent implements OnInit, OnDestroy, OnChanges {
     
     // Debounce to prevent double-clicks
     const cartItem: CartItem = {
-      id: `${this.serviceData.serviceTitle}-${this.serviceData.packageName}`,
+      id: this.serviceData.serviceTypeId, // Use the actual service type ID
+      serviceTypeId: this.serviceData.serviceTypeId, // Add explicit service type ID
       title: this.serviceData.serviceTitle,
       package: this.serviceData.packageName,
+      serviceTypeName: this.serviceData.serviceTypeName, // Add service type name
       price: this.serviceData.price,
       features: [...this.serviceData.features], // Create new array reference
       serviceIcon: this.serviceData.serviceIcon
@@ -91,14 +95,15 @@ export class PurchaseModalComponent implements OnInit, OnDestroy, OnChanges {
       }, 100);
     });
   }
-
   onAddToBasket() {
     if (!this.serviceData) return;
     
     const cartItem: CartItem = {
-      id: `${this.serviceData.serviceTitle}-${this.serviceData.packageName}`,
+      id: this.serviceData.serviceTypeId, // Use the actual service type ID
+      serviceTypeId: this.serviceData.serviceTypeId, // Add explicit service type ID
       title: this.serviceData.serviceTitle,
       package: this.serviceData.packageName,
+      serviceTypeName: this.serviceData.serviceTypeName, // Add service type name
       price: this.serviceData.price,
       features: [...this.serviceData.features],
       serviceIcon: this.serviceData.serviceIcon

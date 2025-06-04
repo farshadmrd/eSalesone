@@ -39,15 +39,14 @@
               <span class="error-message" *ngIf="isFieldInvalid('email')">
                 {{ getFieldError('email') }}
               </span>
-            </div>
-
-            <div class="form-group">
+            </div>            <div class="form-group">
               <label for="phone">Phone Number *</label>
               <input 
                 type="tel" 
                 id="phone" 
                 formControlName="phone"
                 [class.error]="isFieldInvalid('phone')"
+                (input)="formatPhoneNumber($event)"
                 placeholder="Enter your phone number">
               <span class="error-message" *ngIf="isFieldInvalid('phone')">
                 {{ getFieldError('phone') }}
@@ -97,15 +96,14 @@
                 <span class="error-message" *ngIf="isFieldInvalid('state')">
                   {{ getFieldError('state') }}
                 </span>
-              </div>
-
-              <div class="form-group">
+              </div>              <div class="form-group">
                 <label for="zipCode">Zip Code *</label>
                 <input 
                   type="text" 
                   id="zipCode" 
                   formControlName="zipCode"
                   [class.error]="isFieldInvalid('zipCode')"
+                  (input)="formatZipCode($event)"
                   placeholder="12345">
                 <span class="error-message" *ngIf="isFieldInvalid('zipCode')">
                   {{ getFieldError('zipCode') }}
@@ -117,12 +115,12 @@
           <!-- Payment Information -->
           <div class="form-section">
             <h2>Payment Information</h2>
-            
-            <div class="form-group">
+              <div class="form-group">
               <label for="cardNumber">Card Number *</label>
               <input 
                 type="text" 
                 id="cardNumber" 
+                formControlName="cardNumber"
                 maxlength="19"
                 [class.error]="isFieldInvalid('cardNumber')"
                 (input)="formatCardNumber($event)"
@@ -132,12 +130,12 @@
               </span>
             </div>
 
-            <div class="form-row">
-              <div class="form-group">
+            <div class="form-row">              <div class="form-group">
                 <label for="expiryDate">Expiry Date *</label>
                 <input 
                   type="text" 
                   id="expiryDate" 
+                  formControlName="expiryDate"
                   maxlength="5"
                   [class.error]="isFieldInvalid('expiryDate')"
                   (input)="formatExpiryDate($event)"
@@ -145,9 +143,7 @@
                 <span class="error-message" *ngIf="isFieldInvalid('expiryDate')">
                   {{ getFieldError('expiryDate') }}
                 </span>
-              </div>
-
-              <div class="form-group">
+              </div>              <div class="form-group">
                 <label for="cvv">CVV *</label>
                 <input 
                   type="text" 
@@ -155,14 +151,16 @@
                   maxlength="3"
                   formControlName="cvv"
                   [class.error]="isFieldInvalid('cvv')"
+                  (input)="formatCVV($event)"
                   placeholder="123">
                 <span class="error-message" *ngIf="isFieldInvalid('cvv')">
                   {{ getFieldError('cvv') }}
                 </span>
               </div>
             </div>
-          </div>          <button type="submit" class="submit-btn" [disabled]="!checkoutForm.valid || orderSummary.length === 0">
-            Complete Purchase
+          </div>          <button type="submit" class="submit-btn" [disabled]="!checkoutForm.valid || orderSummary.length === 0 || isSubmitting">
+            <span *ngIf="!isSubmitting">Complete Purchase</span>
+            <span *ngIf="isSubmitting">Processing...</span>
           </button>
         </form>
       </div>
@@ -183,6 +181,7 @@
           </div>          <div class="summary-item" *ngFor="let item of orderSummary">
             <div class="item-info">
               <h3>{{ item.title }}</h3>
+              <p class="service-type">{{ item.serviceTypeName }}</p>
               <p class="package-name">{{ item.package }}</p>
               <ul class="features-list">
                 <li *ngFor="let feature of item.features">{{ feature }}</li>
