@@ -9,7 +9,9 @@ import { ServiceCard } from '../components/sections/service-card/service-card.mo
 })
 export class PhotoServicesService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://127.0.0.1:8000/api/services/';
+  private apiBase = window.location.origin; 
+  private apiUrl = `${this.apiBase}/api/services/`;
+  // private apiUrl = 'http://127.0.0.1:8000/api/services/';
 
   constructor() { }
 

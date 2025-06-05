@@ -37,7 +37,11 @@ export interface CheckoutResponse {
   providedIn: 'root'
 })
 export class CheckoutService {
-  private apiUrl = 'http://127.0.0.1:8000/api/transactions/';
+
+  private apiBase = window.location.origin; 
+  private apiUrl = `${this.apiBase}/api/transactions/`;
+  
+  // private apiUrl = 'http://127.0.0.1:8000/api/transactions/';
 
   constructor(private http: HttpClient) {}
   submitCheckout(checkoutData: CheckoutRequest): Observable<CheckoutResponse> {

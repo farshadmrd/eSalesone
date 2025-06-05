@@ -146,3 +146,11 @@ img {
     font-size: 9.625rem;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .masked-text {
+    font-size: 7.625rem;
+    padding-bottom: 1.85rem;
+  }
+
+}

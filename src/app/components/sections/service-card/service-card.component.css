@@ -145,7 +145,4 @@
 }
 @media screen and (max-width: 640px) {
 
-  .service-card {
-    min-width: 450px; 
-  }
 }

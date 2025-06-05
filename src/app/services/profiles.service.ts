@@ -15,12 +15,18 @@ export interface Profile {
   log_bar_images: string[];
 }
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProfilesService {
+
+
   private http = inject(HttpClient);
-  private apiUrl = 'http://127.0.0.1:8000/api/profiles/';
+  private apiBase = window.location.origin; 
+  private apiUrl = `${this.apiBase}/api/profiles/`;
+  // private apiUrl = 'http://127.0.0.1:8000/api/profiles/';
 
   constructor() { }
   // GET method to fetch all profiles
