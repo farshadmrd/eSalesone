@@ -64,6 +64,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "allowedHosts": ["esalesone.live"],
+            "host": "0.0.0.0",
+            "port": 4200,
+            "disableHostCheck": true
+          },
           "configurations": {
             "production": {
               "buildTarget": "personalPage:build:production"
