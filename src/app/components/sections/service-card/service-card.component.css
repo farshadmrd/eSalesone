@@ -51,6 +51,7 @@
   flex-direction: column;
   gap: 20px;
   margin-top: 1rem;
+  width: 100%;
 }
 
 .pricing-tier {
@@ -137,12 +138,3 @@
 }
 
 
-@media screen and (max-width: 768px) {
-
-  .service-card {
-    min-width: 500px; 
-  }
-}
-@media screen and (max-width: 640px) {
-
-}

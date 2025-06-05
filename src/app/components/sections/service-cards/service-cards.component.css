@@ -50,24 +50,5 @@
 }
 }
 
-@media screen and (max-width: 900px) {
-.service-card-wrapper {
-    max-width: 500px;
 
-}
-}
-
-@media (max-width: 768px) {
-
-}
-
-@media screen and (max-width: 640px) {
-.service-card-wrapper {
-    min-width: 500px;
-
-}
-.service-card{
-  min-width: 500px;
-}
-}
 

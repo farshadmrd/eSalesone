@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 82vh;
+  height: 86vh;
 }
 .about-me-title{
   margin-top: 8px;
@@ -118,4 +118,37 @@
     height: 400px;
   }
 }
-@media screen and (max-width: 640px) {}
+@media screen and (max-width: 500px) {
+  .about-me-title {
+    font-size: 30px;
+  }
+   .about-me-text {
+    width: 230px;
+  }
+  .logo-carousel{
+  height: 14vh;
+}
+.background-img{
+  height: 80%;
+}
+.foreground-img{
+  height: 80%;
+
+}
+
+@keyframes revealBackground {
+  from {
+    top: 0;
+    left: 0;
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  to {
+    top: 63px;
+    left: -187px;
+    transform: rotate(-10deg);
+    opacity: 0.9;
+  }
+}
+
+}

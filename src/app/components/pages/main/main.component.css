@@ -154,3 +154,25 @@ img {
   }
 
 }
+
+@media screen and (max-width: 500px) {
+  .masked-text {
+  font-size: 5.625rem;
+    padding-bottom: 1.5rem;
+  }
+  .main-container {
+    height: 96vh;
+  }
+.circle-mask {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 100, 100, 0.6);
+    bottom: -39px;
+    right: 82px;
+
+}
+img{
+  height: 50%;
+}
+
+}

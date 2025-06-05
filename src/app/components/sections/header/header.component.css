@@ -186,7 +186,7 @@ nav {
   /* Additional mobile breakpoint for smaller screens */
   @media screen and (max-width: 480px) {
     nav {
-      height: 55px;
+      height: 4vh;
     }
 
     nav ul {
@@ -215,7 +215,7 @@ nav {
   /* Extra small devices */
   @media screen and (max-width: 360px) {
     nav {
-      height: 50px;
+      height: 4vh;
     }
 
     nav ul {
